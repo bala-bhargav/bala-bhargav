@@ -7,7 +7,8 @@ fn main() {
     io::stdout().flush().unwrap();
     let mut s = String::new();
     io::stdin().read_line(&mut s).unwrap();
-    println!("invalid_grape_command");
+    println!("invalid_grape_command : command not found");
+
 
     
 }
