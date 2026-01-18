@@ -42,6 +42,10 @@ fn main() {
     else if start_exit {
         break;
     }
+    else{
+        println!("{}: command not found",s);
+                    
+    }
     
     }
 
