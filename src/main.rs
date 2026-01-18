@@ -17,6 +17,9 @@ fn main() {
         if s.split_whitespace().nth(1) == Some("exit") { 
         println!("{}","exit is a shell builtin");
         }
+        if s.split_whitespace().nth(1) == Some("type") { 
+        println!("{}","type is a shell builtin");
+        }
         continue;
     }
     let rest = s
