@@ -14,20 +14,22 @@ fn main() {
         if s.split_whitespace().nth(1) == Some("echo") {
         println!("{}","echo is a shell builtin");
         }
-        if s.split_whitespace().nth(1) == Some("exit") { 
+        else if s.split_whitespace().nth(1) == Some("exit") { 
         println!("{}","exit is a shell builtin");
         }
-        if s.split_whitespace().nth(1) == Some("type") { 
+        else if s.split_whitespace().nth(1) == Some("type") { 
         println!("{}","type is a shell builtin");
         }
-        continue;
-    }
-    let rest = s
+        else {
+let rest = s
     .split_whitespace()
     .skip(1)
     .collect::<Vec<&str>>()
     .join(" ");
-    println!("{}: command not found",rest.trim()); 
+    println!("{}: not found",rest.trim()); 
+        }
+    }
+    
     }
 
 
