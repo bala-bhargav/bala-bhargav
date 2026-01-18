@@ -42,8 +42,8 @@ fn main() {
     else if start_exit {
         break;
     }
-    else{
-        println!("{}: command not found",s);
+    else{ 
+        println!("{}: command not found",s.trim());
                     
     }
     
