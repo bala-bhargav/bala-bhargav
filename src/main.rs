@@ -9,14 +9,23 @@ fn main() {
     let mut s = String::new();
     let bytes = io::stdin().read_line(&mut s).unwrap();
     if s.trim() == "exit" {break};
-    let bb = s.trim().split_whitespace().next() == Some("echo");
+    let start_type = s.trim().split_whitespace().next() == Some("type");
     if s.trim().is_empty(){continue};
-    if bb {
-        let ans = s.strip_prefix("echo").unwrap().trim();
-        println!("{}",ans);
+    if start_type {
+        if s.split_whitespace().nth(2) == Some("echo") {
+        println!("{}","echo is a shell builtin");
+        }
+        if s.split_whitespace().nth(2) == Some("exit") { 
+        println!("{}: not found","exit is a shell builtin");
+        }
         continue;
     }
-    println!("{}: command not found",s.trim());
+    let rest = s
+    .split_whitespace()
+    .skip(1)
+    .collect::<Vec<&str>>()
+    .join(" ");
+    println!("{}: command not found",rest.trim()); 
     }
 
 
