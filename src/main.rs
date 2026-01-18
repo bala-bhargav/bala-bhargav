@@ -8,7 +8,7 @@ fn main() {
     io::stdout().flush().unwrap();
     let mut s = String::new();
     let bytes = io::stdin().read_line(&mut s).unwrap();
-    if bytes == 0{break};
+    if s.trim() == "exit" {break};
     if s.trim().is_empty(){continue};
     println!("{}: command not found",s.trim());
     }
