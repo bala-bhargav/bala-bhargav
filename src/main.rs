@@ -1,5 +1,6 @@
 #[allow(unused_imports)]
 use std::io::{self, Write};
+use pathsearch::find_executable_in_path;
 
 fn main() {
     // TODO: Uncomment the code below to pass the first stage
@@ -21,6 +22,9 @@ fn main() {
         }
         else if s.split_whitespace().nth(1) == Some("type") { 
         println!("{}","type is a shell builtin");
+        }
+        else if let Some(path) = find_executable_in_path(s.split_whitespace().nth(1)){
+            println!("{} is {}",s.split_whitespace().nth(1).unwrap(),path.display());
         }
         else {
          let rest = s
