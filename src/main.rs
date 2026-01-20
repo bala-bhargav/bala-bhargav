@@ -1,6 +1,33 @@
 #[allow(unused_imports)]
 use std::io::{self, Write};
-use pathsearch::find_executable_in_path;
+use std::env;
+use std::fs;
+use std::path::Path;
+
+fn find_executable_in_path(cmd: &str) -> Option<String> {
+    if cmd.contains("/") {
+        let p = Path::new(cmd);
+        if p.exists() && fs::metadata(p).map(|m| m.permissions().mode() & 0o111 != 0).unwrap_or(false) {
+            return Some(cmd.to_string());
+        } else {
+            return None;
+        }
+    }
+
+    if let Ok(paths) = env::var("PATH") {
+        for path in paths.split(':') {
+            let full_path = Path::new(path).join(cmd);
+            if full_path.exists() {
+                if let Ok(metadata) = fs::metadata(&full_path) {
+                    if metadata.permissions().mode() & 0o111 != 0 {
+                        return Some(full_path.to_string_lossy().to_string());
+                    }
+                }
+            }
+        }
+    }
+    None
+}
 
 fn main() {
     // TODO: Uncomment the code below to pass the first stage
