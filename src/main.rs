@@ -1,5 +1,6 @@
 #[allow(unused_imports)]
 use std::io::{self, Write};
+use std::os::unix::fs::PermissionsExt;
 use std::env;
 use std::fs;
 use std::path::Path;
@@ -50,16 +51,15 @@ fn main() {
         else if s.split_whitespace().nth(1) == Some("type") { 
         println!("{}","type is a shell builtin");
         }
-        else if let Some(path) = find_executable_in_path(s.split_whitespace().nth(1)){
-            println!("{} is {}",s.split_whitespace().nth(1).unwrap(),path.display());
+        else if let Some(cmd) = s.split_whitespace().nth(1){
+              if let Some(path) = find_executable_in_path(cmd) { 
+                    println!("{} is {}", cmd, path);                
+                } else {                                            
+                    println!("{}: not found", cmd);                 
+                } 
         }
         else {
-         let rest = s
-                    .split_whitespace()
-                    .skip(1)
-                    .collect::<Vec<&str>>()
-                    .join(" ");
-         println!("{}: not found",rest.trim()); 
+        println!("type: missing argument"); 
         }
     }
     else if start_echo {
