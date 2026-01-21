@@ -81,8 +81,12 @@ fn main() {
         println!("{}", env::current_dir().unwrap().display());
     }
     else if s.split_whitespace().nth(0) == Some("cd"){
-         if let Some(bb) = s.split_whitespace().nth(1){
-            if let Ok(path) = env::set_current_dir(bb){                 
+         if let Some(bb) = s.split_whitespace().nth(1){ 
+            if bb == "~"{
+                let home = env::var("HOME").unwrap();
+                let _ = env::set_current_dir(home);                 
+            }
+            else if let Ok(path) = env::set_current_dir(bb){                 
             }
             else{
                 println!("cd: {}: No such file or directory",bb);
@@ -101,7 +105,7 @@ fn main() {
         else {
         println!("{}: command not found",cmd);
         }    
-                        
+
     }
     }
 }
