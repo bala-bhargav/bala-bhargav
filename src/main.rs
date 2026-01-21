@@ -55,7 +55,7 @@ fn main() {
         else if let Some(cmd) = s.split_whitespace().nth(0){
               if let Some(path) = find_executable_in_path(cmd) { 
                     let args = &s[1..];
-                  let status  Command::new(cmd).args(args).status();
+                  let status  =  Command::new(cmd).args(args).status();
                   if !status.is_ok(){
                     println!("{}: command not found", cmd);
                   }
