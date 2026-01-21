@@ -31,6 +31,42 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
     None
 }
 
+ fn parse_args(input: &str)->Vec<String>{
+    let mut args = Vec::new();
+    let mut curr = String::new();
+    let in_quotes = false;
+    let mut chars = input.chars().peekable();
+
+
+    while let Some(c) = chars.next(){
+        if c == '\''{
+            in_quotes = !in_quotes;
+        }
+        else if (c == ' ' || c == '\t') && !in_quotes{
+            if !curr.is_empty(){
+                args.push(curr.clone());
+                curr = String::new();
+            }
+            while let Some(next) = chars.peek() {
+                if *next == ' ' || *next == '\t' {
+                    chars.next();
+                } else {
+                    break;
+                }
+            }
+        }
+        else{
+            curr.push(c);
+        }
+        
+    }
+    if !curr.is_empty(){
+        args.push(curr);
+    }
+    args
+
+ }
+
 fn main() {
     // TODO: Uncomment the code below to pass the first stage
     loop {
@@ -67,13 +103,10 @@ fn main() {
         }
     }
     else if start_echo {
-        let rest = s
-                    .split_whitespace()
-                    .skip(1)
-                    .collect::<Vec<&str>>()
-                    .join(" ");
-        println!("{}",rest.trim()); 
-        
+     let args = parse_args(s.trim());
+    let out = args.iter().skip(1).cloned().collect::<Vec<_>>().join(" ");
+    println!("{}", out);
+
     }
     else if start_exit {
         break;
