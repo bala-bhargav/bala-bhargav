@@ -79,7 +79,9 @@ fn main() {
         if parts.is_empty(){continue};
         let cmd = parts[0]; 
         if let Some(path) = find_executable_in_path(cmd) {
-            Command::new(&path).arg0(cmd).args(&parts[1..]).status();
+            Command::new(&path)
+                 .args(&parts[1..])
+                 .status();
         }
         else {
         println!("{}: command not found",cmd);
