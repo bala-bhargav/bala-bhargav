@@ -75,7 +75,7 @@ fn main() {
         break;
     }
     else if s.split_whitespace().nth(0) == Some("pwd"){
-        println!("pwd is a shell builtin");
+        println!("{}", env::current_dir().unwrap().display());
     }
     else{ 
         let parts: Vec<&str> = s.trim().split_whitespace().collect();
