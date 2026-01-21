@@ -85,7 +85,7 @@ fn main() {
             if let Ok(path) = env::set_current_dir(bb){                 
             }
             else{
-                println!("cd: {} : No such file or directory",bb);
+                println!("cd: {}: No such file or directory",bb);
             }
          }
     }
