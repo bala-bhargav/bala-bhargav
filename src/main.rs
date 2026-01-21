@@ -52,6 +52,9 @@ fn main() {
         else if s.split_whitespace().nth(1) == Some("type") { 
         println!("{}","type is a shell builtin");
         }
+        else if s.split_whitespace().nth(1) == Some("pwd") {
+         println!("pwd is a shell builtin");
+         }
         else if let Some(cmd) = s.split_whitespace().nth(1){
               if let Some(path) = find_executable_in_path(cmd) { 
                     println!("{} is {}", cmd, path);                
