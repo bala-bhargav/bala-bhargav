@@ -74,6 +74,9 @@ fn main() {
     else if start_exit {
         break;
     }
+    else if s.split_whitespace().nth(0) == Some("pwd"){
+        println!("{}", env::current_dir().unwrap().display());
+    }
     else{ 
         let parts: Vec<&str> = s.trim().split_whitespace().collect();
         if parts.is_empty(){continue};
