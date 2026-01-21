@@ -79,7 +79,7 @@ fn main() {
         if parts.is_empty(){continue};
         let cmd = parts[0]; 
         if let Some(path) = find_executable_in_path(cmd) {
-            Command::new(&path)
+            Command::new(cmd)
                  .args(&parts[1..])
                  .status();
         }
