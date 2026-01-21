@@ -73,6 +73,7 @@ fn main() {
                     .collect::<Vec<&str>>()
                     .join(" ");
         println!("{}",rest.trim()); 
+        
     }
     else if start_exit {
         break;
