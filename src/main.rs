@@ -34,15 +34,18 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
  fn parse_args(input: &str)->Vec<String>{
     let mut args = Vec::new();
     let mut curr = String::new();
-    let mut in_quotes = false;
+    let mut in_single = false;
+    let mut in_double = false;
     let mut chars = input.chars().peekable();
 
 
     while let Some(c) = chars.next(){
-        if c == '\''{
-            in_quotes = !in_quotes;
+         if c == '\'' && !in_double {
+            in_single = !in_single;
+        } else if c == '"' && !in_single {
+            in_double = !in_double;
         }
-        else if (c == ' ' || c == '\t') && !in_quotes{
+        else if (c == ' ' || c == '\t') && !in_single && !in_double{
             if !curr.is_empty(){
                 args.push(curr.clone());
                 curr = String::new();
