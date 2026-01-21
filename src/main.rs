@@ -54,7 +54,7 @@ fn main() {
         }
         else if s.split_whitespace().nth(1) == Some("pwd") {
          println!("pwd is a shell builtin");
-         }
+        }
         else if let Some(cmd) = s.split_whitespace().nth(1){
               if let Some(path) = find_executable_in_path(cmd) { 
                     println!("{} is {}", cmd, path);                
@@ -79,6 +79,15 @@ fn main() {
     }
     else if s.split_whitespace().nth(0) == Some("pwd"){
         println!("{}", env::current_dir().unwrap().display());
+    }
+    else if s.split_whitespace().nth(0) == Some("cd"){
+         if let Some(bb) = s.split_whitespace().nth(1){
+            if let Ok(path) = env::set_current_dir(bb){                 
+            }
+            else{
+                println!("cd: {} : No such file or directory",bb);
+            }
+         }
     }
     else{ 
         let parts: Vec<&str> = s.trim().split_whitespace().collect();
