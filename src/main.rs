@@ -100,7 +100,8 @@ fn main() {
         }
         else {
         println!("{}: command not found",cmd);
-        }                    
+        }    
+                        
     }
     }
 }
