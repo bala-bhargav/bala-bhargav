@@ -110,10 +110,10 @@ fn main() {
     }
     else if s.split_whitespace().nth(0) == Some("cat"){
         let args = parse_args(s.trim());
-        let cmd = &parts[0];
-        let args = &parts[1..];
+        let cmd = &args[0];
+        let arg = &args[1..];
         Command::new(cmd)
-            .args(args)
+            .args(arg)
             .status();
 
     }
