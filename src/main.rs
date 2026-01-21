@@ -34,7 +34,7 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
  fn parse_args(input: &str)->Vec<String>{
     let mut args = Vec::new();
     let mut curr = String::new();
-    let in_quotes = false;
+    let mut in_quotes = false;
     let mut chars = input.chars().peekable();
 
 
