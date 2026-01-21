@@ -4,6 +4,7 @@ use std::os::unix::fs::PermissionsExt;
 use std::env;
 use std::fs;
 use std::path::Path;
+use std::process::Command;
 
 fn find_executable_in_path(cmd: &str) -> Option<String> {
     if cmd.contains("/") {
@@ -51,9 +52,14 @@ fn main() {
         else if s.split_whitespace().nth(1) == Some("type") { 
         println!("{}","type is a shell builtin");
         }
-        else if let Some(cmd) = s.split_whitespace().nth(1){
+        else if let Some(cmd) = s.split_whitespace().nth(0){
               if let Some(path) = find_executable_in_path(cmd) { 
-                    println!("{} is {}", cmd, path);                
+                    let args = &s[1..];
+                  let status  Command::new(cmd).args(args).status();
+                  if !status.is_ok(){
+                    println!("{}: command not found", cmd);
+                  }
+
                 } else {                                            
                     println!("{}: not found", cmd);                 
                 } 
