@@ -108,8 +108,20 @@ fn main() {
     else if start_echo {
      let args = parse_args(s.trim());
     let out = args.iter().skip(1).cloned().collect::<Vec<_>>().join(" ");
-    println!("{}", out);
+     let mut chars = out.chars().peekable();
+     let mut curr = String::new();
 
+  while let Some(c) = chars.next() {
+    if c == '\\' {
+        if let Some(next_char) = chars.next() {
+            curr.push(next_char);
+        }
+    } else {
+        curr.push(c);
+    }
+}
+
+println!("{}", curr);
     }
     else if s.split_whitespace().nth(0) == Some("cat"){
         let args = parse_args(s.trim());
