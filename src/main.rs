@@ -109,7 +109,7 @@ fn main() {
      let args = parse_args(s.trim());
     let out = args.iter().skip(1).cloned().collect::<Vec<_>>().join(" ");
      let mut chars = out.chars().peekable();
-     let mut curr = String::new();
+     let mut res = String::new();
 
      while let Some(c) = chars.next() {
         if c == '\\' {
