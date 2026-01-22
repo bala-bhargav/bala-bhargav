@@ -114,7 +114,7 @@ fn main() {
      while let Some(c) = chars.next(){
         if c == '\''{
             let Some(nxt_char) = chars.peek();
-            curr.push(nxt_char);
+            curr.push(*nxt_char);
             chars.next();
         }
         else{
