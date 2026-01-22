@@ -111,17 +111,17 @@ fn main() {
      let mut chars = out.chars().peekable();
      let mut curr = String::new();
 
-     while let Some(c) = chars.next(){
-        if c == '\''{
-            let Some(nxt_char) = chars.peek();
-            curr.push(*nxt_char);
-            chars.next();
+     while let Some(c) = chars.next() {
+        if c == '\\' {
+            if let Some(next_char) = chars.next() {
+                res.push(next_char);
+            }
+        } else {
+            res.push(c);
         }
-        else{
-            curr.push(c);
-        }
-     }
-     println!("{}",curr);
+    }
+
+    println!("{}", res);
     }
     else if s.split_whitespace().nth(0) == Some("cat"){
         let args = parse_args(s.trim());
