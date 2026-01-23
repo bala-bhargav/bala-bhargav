@@ -38,16 +38,21 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
     let mut in_double = false;
     let mut chars = input.chars().peekable();
 
-
     while let Some(c) = chars.next(){
-        if c == '\\' {
+      
+        if c == '\'' && !in_double {
+            in_single = !in_single;
+        }
+        else   if c == '\\' && !in_single  {
+
           if let Some(next_char) = chars.next() {
                 curr.push(next_char);   
           }
         }
-        else if c == '\'' && !in_double {
-            in_single = !in_single;
-        } else if c == '"' && !in_single {
+        else if c == '\\ ' && in_single {
+            curr.push(c);
+        }
+         else if c == '"' && !in_single {
             in_double = !in_double;
         }
         else if (c == ' ' || c == '\t') && !in_single && !in_double{
