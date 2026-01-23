@@ -49,7 +49,7 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
                 curr.push(next_char);   
           }
         }
-        else if c == '\\ ' && in_single {
+        else if c == '\\' && in_single {
             curr.push(c);
         }
          else if c == '"' && !in_single {
