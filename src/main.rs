@@ -52,6 +52,9 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
         else if c == '\\' && in_single {
             curr.push(c);
         }
+        else if c == '\\' && in_double {
+            curr.push(c);
+        }
          else if c == '"' && !in_single {
             in_double = !in_double;
         }
@@ -67,7 +70,7 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
                     break;
                 }
             }
-        }
+        } 
         else{
             curr.push(c);
         }
@@ -148,6 +151,27 @@ fn main() {
                 println!("cd: {}: No such file or directory",bb);
             }
          }
+    }
+    else if s.starts_with("\'") || s.starts_with("\""){
+        let mut str = String::new();
+        let mut args = String::new();
+        let mut chars = s.chars().peekable();
+
+        let mut flag = false;
+        while let Some(c) = chars.next(){
+            if c == '\'' || c == '\"'{
+                flag = !flag;
+            }
+            else if flag {
+                str.push(c);
+            }
+            else if !flag && c!=' '{
+                args.push(c);
+            }
+        }
+        Command::new(str)
+            .arg(args)
+            .status();
     }
     else{ 
         let parts: Vec<&str> = s.trim().split_whitespace().collect();
