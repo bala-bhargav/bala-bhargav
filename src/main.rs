@@ -153,25 +153,22 @@ fn main() {
          }
     }
     else if s.starts_with("\'") || s.starts_with("\""){
-        let mut str = String::new();
-        let mut args = String::new();
-        let mut chars = s.chars().peekable();
+     let tokens = parse_args(s.trim());
 
-        let mut flag = false;
-        while let Some(c) = chars.next(){
-            if c == '\'' || c == '\"'{
-                flag = !flag;
-            }
-            else if flag {
-                str.push(c);
-            }
-            else if !flag && c!=' '{
-                args.push(c);
-            }
+      if tokens.is_empty() {
+    continue;
+     }
+
+     let exe = &tokens[0];
+      let args = &tokens[1..];
+
+     if let Some(path) = find_executable_in_path(exe) {
+    Command::new(path)
+        .args(args)
+        .status();
+     } else {
+    println!("{}: command not found", exe);
         }
-        Command::new(str)
-            .arg(args)
-            .status();
     }
     else{ 
         let parts: Vec<&str> = s.trim().split_whitespace().collect();
