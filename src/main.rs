@@ -153,22 +153,26 @@ fn main() {
          }
     }
     else if s.starts_with("\'") || s.starts_with("\""){
-     let tokens = parse_args(s.trim());
+   let tokens = parse_args(s.trim());
+   if tokens.is_empty() { continue; }
 
-      if tokens.is_empty() {
-    continue;
-     }
+    let mut exe = tokens[0].clone();
 
-     let exe = &tokens[0];
-      let args = &tokens[1..];
+// Remove outer quotes if they exist
+    if (exe.starts_with('"') && exe.ends_with('"')) || (exe.starts_with('\'') && exe.ends_with('\'')) {
+    exe = exe[1..exe.len()-1].to_string();
+    }
 
-     if let Some(path) = find_executable_in_path(exe) {
+        let args = &tokens[1..];
+
+    if let Some(path) = find_executable_in_path(&exe) {
     Command::new(path)
         .args(args)
-        .status();
-     } else {
+        .status()
+        .expect("Failed to execute command");
+        } else {
     println!("{}: command not found", exe);
-        }
+         }
     }
     else{ 
         let parts: Vec<&str> = s.trim().split_whitespace().collect();
@@ -183,7 +187,7 @@ fn main() {
         println!("{}: command not found",cmd);
         }    
 
-        
+
     }
     }
 }
