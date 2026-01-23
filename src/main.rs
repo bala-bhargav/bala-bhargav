@@ -40,7 +40,12 @@ fn find_executable_in_path(cmd: &str) -> Option<String> {
 
 
     while let Some(c) = chars.next(){
-         if c == '\'' && !in_double {
+        if c == '\\' {
+          if let Some(next_char) = chars.next() {
+                curr.push(next_char);   
+          }
+        }
+        else if c == '\'' && !in_double {
             in_single = !in_single;
         } else if c == '"' && !in_single {
             in_double = !in_double;
@@ -105,23 +110,11 @@ fn main() {
         println!("type: missing argument"); 
         }
     }
-    else if start_echo {
+    else if start_echo {  
      let args = s.trim();
-     let out = s.trim().strip_prefix("echo ").unwrap();
-     let mut chars = out.chars().peekable();
-     let mut res = String::new();
+     let out = args.iter().skip(1).cloned().collect::<Vec<_>>().join(" ");
 
-     while let Some(c) = chars.next() {
-        if c == '\\' {
-            if let Some(next_char) = chars.next() {
-                res.push(next_char);
-            }
-        } else {
-            res.push(c);
-        }
-    }
-
-    println!("{}", res);
+    println!("{}", out);
     }
     else if s.split_whitespace().nth(0) == Some("cat"){
         let args = parse_args(s.trim());
