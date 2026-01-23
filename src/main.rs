@@ -111,7 +111,7 @@ fn main() {
         }
     }
     else if start_echo {  
-     let args = s.trim();
+     let args = parse_args(s.trim());
      let out = args.iter().skip(1).cloned().collect::<Vec<_>>().join(" ");
 
     println!("{}", out);
