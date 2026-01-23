@@ -106,8 +106,8 @@ fn main() {
         }
     }
     else if start_echo {
-     let args = parse_args(s.trim());
-    let out = args.iter().skip(1).cloned().collect::<Vec<_>>().join(" ");
+     let args = s.trim();
+     let out = s.trim().strip_prefix("echo ").unwrap();
      let mut chars = out.chars().peekable();
      let mut res = String::new();
 
